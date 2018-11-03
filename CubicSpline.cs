@@ -9,15 +9,19 @@ namespace CubicSplineInterpolation
 {
     class CubicSpline
     {
-        private readonly double xLeft, xRight;
-        private readonly double a, b, c, d;
+        public double xLeft { get; }
+        public double xRight { get; }
+        public double a { get; }
+        public double b { get; }
+        public double c { get; }
+        public double d { get; }
 
         public double Function(double x)
         {
             return a +
-                    b * (x - xRight) +
-                    c * (x - xRight) * (x - xRight) +
-                    d * (x - xRight) * (x - xRight) * (x - xRight);
+                    b * (x - xLeft) +
+                    c * (x - xLeft) * (x - xLeft) +
+                    d * (x - xLeft) * (x - xLeft) * (x - xLeft);
         }
 
         public CubicSpline(double xLeft, double xRight,
@@ -37,7 +41,7 @@ namespace CubicSplineInterpolation
             string str = "";
             string var = "";
 
-            if (xRight != 0)
+            if (xLeft != 0)
                 var = "(x" + xRight.ToString("-0.##;+0.##", CultureInfo.InvariantCulture) + ")";
             else
                 var = "x";
@@ -71,59 +75,11 @@ namespace CubicSplineInterpolation
 
         public string GetVarValues()
         {
-            return "x = " + xRight.ToString() + "\n" +
+            return "x = " + xLeft.ToString() + "\n" +
                 "a = " + a.ToString() + "\n" +
                 "b = " + b.ToString() + "\n" +
                 "c = " + c.ToString() + "\n" +
                 "d = " + d.ToString() + "\n";
-        }
-
-        public double XLeft
-        {
-            get
-            {
-                return xLeft;
-            }
-        }
-
-        public double XRight
-        {
-            get
-            {
-                return xRight;
-            }
-        }
-
-        public double A
-        {
-            get
-            {
-                return a;
-            }
-        }
-
-        public double B
-        {
-            get
-            {
-                return b;
-            }
-        }
-
-        public double C
-        {
-            get
-            {
-                return c;
-            }
-        }
-
-        public double D
-        {
-            get
-            {
-                return d;
-            }
         }
     }
 }

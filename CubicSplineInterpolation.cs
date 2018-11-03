@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +9,14 @@ namespace CubicSplineInterpolation
 {
     class CubicSplineInterpolation
     {
-        private readonly int size;
+        public int size { get; }
         private readonly CubicSpline[] splines;
 
         public CubicSplineInterpolation(double[] x, double[] y)
         {
             if (x.Length == y.Length)
             {
-                //Sort(x, y);
+                Sort(x, y);
 
                 int length = x.Length - 1;
 
@@ -24,9 +25,9 @@ namespace CubicSplineInterpolation
                 double[] d = new double[length];
                 double[] h = new double[length];
 
-                double[] downDiagonal = new double[length - 2];
+                double[] downDiagonal = length - 2 > 0 ? new double[length - 2] : null;
                 double[] midDiagonal = new double[length - 1];
-                double[] upDiagonal = new double[length - 2];
+                double[] upDiagonal = length - 2 > 0 ? new double[length - 2] : null;
                 double[] f = new double[length - 1];
 
                 for (int i = 0; i < length; i++)
@@ -59,7 +60,10 @@ namespace CubicSplineInterpolation
 
                 TridiagonalMatrix tridiagonalMatrix = new TridiagonalMatrix();
                 double[] solution = new double[length - 1];
-                solution = tridiagonalMatrix.Solve(downDiagonal, midDiagonal, upDiagonal, f);
+                if (length >= 2)
+                {
+                    solution = tridiagonalMatrix.Solve(downDiagonal, midDiagonal, upDiagonal, f);
+                }
 
                 c[0] = 0;
                 c[length] = 0;
@@ -80,8 +84,7 @@ namespace CubicSplineInterpolation
 
                 for (int i = 0; i < length; i++)
                 {
-                    b[i] = (y[i + 1] - y[i]) / h[i] + +(2 * c[i + 1] + c[i]) * h[i] / 3;
-                    //b[i] = c[i + 1] * h[i] / 3 + c[i] * h[i] / 6 + (y[i + 1] - y[i]) / h[i];
+                    b[i] = (y[i + 1] - y[i]) / h[i] - (c[i + 1] + 2 * c[i]) * h[i] / 3;
                     Console.WriteLine($"b[{i + 1}]   = {b[i]}");
                 }
 
@@ -91,6 +94,8 @@ namespace CubicSplineInterpolation
                 {
                     splines[i] = new CubicSpline(x[i], x[i + 1], y[i], b[i], c[i], d[i]);
                 }
+
+                Save("e:\\example.txt");
             }
         }
 
@@ -161,5 +166,33 @@ namespace CubicSplineInterpolation
                 }
             }
         }
+
+        public void Save(string path)
+        {
+            StreamWriter streamWriter = new StreamWriter(path, false, System.Text.Encoding.Default);
+
+            streamWriter.WriteLine($"#INTERPOLATION FOR {size}");
+            for (int i = 0; i < size; i++)
+            {
+                streamWriter.WriteLine($"{splines[i].xLeft} {splines[i].xRight} {splines[i].a} {splines[i].b} {splines[i].c} {splines[i].d}");
+            }
+            streamWriter.WriteLine("#END");
+
+            streamWriter.Close();
+        }
+        public void Open(string path)
+        {
+            StreamReader streamReader = new StreamReader(path);
+            
+            while (!streamReader.EndOfStream)
+            {
+                string line = streamReader.ReadLine();
+                
+
+                
+            }
+        }
+       
+
     }
 }

@@ -12,10 +12,17 @@ namespace CubicSplineInterpolation
         {
             int length = midDiagonal.Length;
 
+            if (length == 1)
+            {
+                double[] solution = new double[1];
+                solution[0] = f[0] / midDiagonal[0];
+                return solution;
+            }
+
             if (length == downDiagonal.Length + 1 && length == upDiagonal.Length + 1 && length == f.Length)
             {
                 bool diagonality = IsDiagonalDominance(downDiagonal, midDiagonal, upDiagonal);
-                //Console.WriteLine($"Св-во диагонального преобладания = {diagonality}");
+                Console.WriteLine($"Св-во диагонального преобладания = {diagonality}");
 
                 double[] alpha = new double[length - 1];
                 double[] beta = new double[length - 1];
