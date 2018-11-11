@@ -28,13 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea18 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend18 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.buttonInteprolate = new System.Windows.Forms.Button();
             this.buttonClear = new System.Windows.Forms.Button();
             this.dataGridViewVars = new System.Windows.Forms.DataGridView();
+            this.buttonOpen = new System.Windows.Forms.Button();
+            this.buttonSave = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewVars)).BeginInit();
@@ -57,10 +59,10 @@
             // chart
             // 
             this.chart.AntiAliasing = System.Windows.Forms.DataVisualization.Charting.AntiAliasingStyles.Graphics;
-            chartArea18.Name = "ChartArea1";
-            this.chart.ChartAreas.Add(chartArea18);
-            legend18.Name = "Legend1";
-            this.chart.Legends.Add(legend18);
+            chartArea2.Name = "ChartArea1";
+            this.chart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart.Legends.Add(legend2);
             this.chart.Location = new System.Drawing.Point(12, 12);
             this.chart.Name = "chart";
             this.chart.Size = new System.Drawing.Size(1021, 761);
@@ -101,11 +103,33 @@
             this.dataGridViewVars.Size = new System.Drawing.Size(440, 235);
             this.dataGridViewVars.TabIndex = 4;
             // 
+            // buttonOpen
+            // 
+            this.buttonOpen.Location = new System.Drawing.Point(1073, 481);
+            this.buttonOpen.Name = "buttonOpen";
+            this.buttonOpen.Size = new System.Drawing.Size(119, 51);
+            this.buttonOpen.TabIndex = 5;
+            this.buttonOpen.Text = "Считать с файла";
+            this.buttonOpen.UseVisualStyleBackColor = true;
+            this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
+            // 
+            // buttonSave
+            // 
+            this.buttonSave.Location = new System.Drawing.Point(1394, 481);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(119, 51);
+            this.buttonSave.TabIndex = 6;
+            this.buttonSave.Text = "Сохранить в файл";
+            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            // 
             // Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1525, 795);
+            this.Controls.Add(this.buttonSave);
+            this.Controls.Add(this.buttonOpen);
             this.Controls.Add(this.dataGridViewVars);
             this.Controls.Add(this.buttonClear);
             this.Controls.Add(this.buttonInteprolate);
@@ -128,6 +152,8 @@
         private System.Windows.Forms.Button buttonInteprolate;
         private System.Windows.Forms.Button buttonClear;
         private System.Windows.Forms.DataGridView dataGridViewVars;
+        private System.Windows.Forms.Button buttonOpen;
+        private System.Windows.Forms.Button buttonSave;
     }
 }
 

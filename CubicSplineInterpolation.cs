@@ -10,7 +10,9 @@ namespace CubicSplineInterpolation
     class CubicSplineInterpolation
     {
         public int size { get; }
-        private readonly CubicSpline[] splines;
+        private CubicSpline[] splines;
+
+        Dictionary<int, UInt64> dict;
 
         public CubicSplineInterpolation(double[] x, double[] y)
         {
@@ -94,8 +96,6 @@ namespace CubicSplineInterpolation
                 {
                     splines[i] = new CubicSpline(x[i], x[i + 1], y[i], b[i], c[i], d[i]);
                 }
-
-                Save("e:\\example.txt");
             }
         }
 
@@ -167,7 +167,7 @@ namespace CubicSplineInterpolation
             }
         }
 
-        public void Save(string path)
+        public void SaveInterpolation(string path)
         {
             StreamWriter streamWriter = new StreamWriter(path, false, System.Text.Encoding.Default);
 
@@ -180,19 +180,38 @@ namespace CubicSplineInterpolation
 
             streamWriter.Close();
         }
-        public void Open(string path)
+        public CubicSplineInterpolation(string path)
         {
             StreamReader streamReader = new StreamReader(path);
-            
+            int count = 0;
+
             while (!streamReader.EndOfStream)
             {
                 string line = streamReader.ReadLine();
-                
 
-                
+                if (line.IndexOf("#INTERPOLATION FOR") == 0)
+                {
+                    string[] tmp = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    this.size = int.Parse(tmp[2]);
+                    splines = new CubicSpline[size];
+                }
+                else if (line.IndexOf("#END") == 0)
+                {
+                    break;
+                }
+                else
+                {
+                    string[] coeff = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    splines[count++] = new CubicSpline(double.Parse(coeff[0]),
+                            double.Parse(coeff[1]),
+                            double.Parse(coeff[2]),
+                            double.Parse(coeff[3]),
+                            double.Parse(coeff[4]),
+                            double.Parse(coeff[5]));
+                }
             }
-        }
-       
 
+            streamReader.Close();
+        }
     }
 }
