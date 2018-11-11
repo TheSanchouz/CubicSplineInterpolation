@@ -12,8 +12,6 @@ namespace CubicSplineInterpolation
         public int size { get; }
         private CubicSpline[] splines;
 
-        Dictionary<int, UInt64> dict;
-
         public CubicSplineInterpolation(double[] x, double[] y)
         {
             if (x.Length == y.Length)
