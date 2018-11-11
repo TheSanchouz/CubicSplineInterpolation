@@ -14,15 +14,6 @@ namespace CubicSplineInterpolation
     {
         CubicSplineInterpolation interpolation = null;
 
-        //double[] x = { -3, -1, 1, 3 };
-        //double[] y = { 4, 2, 2, 4 };
-
-        //double[] x = new double[5] { 0, 1 / 4, 1.0 / 2, 3.0 / 4, 1};
-        //double[] y = new double[5] { 1, 2, 1, 0, 1 };
-
-        //double[] x = new double[5] { 0, 1, 2, 4, 8};
-        //double[] y = new double[5] { 0, 1, 4, 16, 64 };
-
         public Form()
         {
             InitializeComponent(); 
