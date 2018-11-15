@@ -51,8 +51,8 @@ namespace CubicSplineInterpolation
 
             //chart.ChartAreas[0].AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.FixedCount;
             //chart.ChartAreas[0].AxisY.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.FixedCount;
-                
-            //chart.ChartAreas[0].AxisX.LabelStyle.Format = "#";
+
+            //chart.ChartAreas[0].AxisX.Interval = 1;
         }
 
         private void buttonInteprolate_Click(object sender, EventArgs e)
@@ -102,6 +102,15 @@ namespace CubicSplineInterpolation
 
                 chart.Series.Clear();
 
+                if ((interpolation[interpolation.size - 1].xRight - interpolation[0].xLeft) / interpolation.size <= 1)
+                {
+                    chart.ChartAreas[0].AxisX.LabelStyle.Format = "0.##";
+                }
+                else
+                {
+                    chart.ChartAreas[0].AxisX.LabelStyle.Format = "#";
+                }
+
                 for (int i = 0; i < interpolation.size; i++)
                 {
                     chart.Series.Add("Spline " + (i + 1).ToString());
@@ -109,9 +118,17 @@ namespace CubicSplineInterpolation
 
                     double dx = (interpolation[i].xRight - interpolation[i].xLeft) * 0.01;
 
+                    //int dim = 1;
+                    //while (Math.Round(dx, dim - 1) == Math.Round(dx, dim))
+                    //{
+                    //    dim++;
+                    //}
+
                     for (double j = interpolation[i].xLeft; j <= interpolation[i].xRight; j += dx)
                     {
-                        chart.Series["Spline " + (i + 1).ToString()].Points.AddXY(Math.Round(j + 0.01, 2), interpolation[i].Function(j));
+                        chart.Series["Spline " + (i + 1).ToString()].Points.AddXY(
+                            /*Math.Round(j, dim)*/j, 
+                            interpolation[i].Function(j));
                         Console.WriteLine($"{Math.Round(j, 2)}");
                     }
 
@@ -140,7 +157,7 @@ namespace CubicSplineInterpolation
                 //{
                 //    chart.Series["Spline"].Points.AddXY(x[i], y[i]);
                 //}
-            }   
+            }  
         }
 
         private void buttonClear_Click(object sender, EventArgs e)
@@ -203,6 +220,16 @@ namespace CubicSplineInterpolation
 
                 chart.Series.Clear();
 
+                if ((interpolation[interpolation.size - 1].xRight - interpolation[0].xLeft) / interpolation.size <= 1)
+                {
+                    chart.ChartAreas[0].AxisX.LabelStyle.Format = "0.##";
+                }
+                else
+                {
+                    chart.ChartAreas[0].AxisX.LabelStyle.Format = "#";
+                }
+
+
                 for (int i = 0; i < interpolation.size; i++)
                 {
                     chart.Series.Add("Spline " + (i + 1).ToString());
@@ -212,7 +239,7 @@ namespace CubicSplineInterpolation
 
                     for (double j = interpolation[i].xLeft; j <= interpolation[i].xRight; j += dx)
                     {
-                        chart.Series["Spline " + (i + 1).ToString()].Points.AddXY(Math.Round(j + 0.01, 2), interpolation[i].Function((double)j));
+                        chart.Series["Spline " + (i + 1).ToString()].Points.AddXY(/*Math.Round(j + 0.01, 2)*/j, interpolation[i].Function((double)j));
                         //Console.WriteLine($"{j}");
                     }
 

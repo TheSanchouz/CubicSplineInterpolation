@@ -101,7 +101,9 @@ namespace CubicSplineInterpolation
         {
             get
             {
-                return splines[number];
+                if (number < size)
+                    return splines[number];
+                else throw new ArgumentException("Выход за предел массива сплайнов");
             }
         }
 
