@@ -102,7 +102,7 @@ namespace CubicSplineInterpolation
 
                 chart.Series.Clear();
 
-                if ((interpolation[interpolation.size - 1].xRight - interpolation[0].xLeft) / interpolation.size <= 1)
+                if ((interpolation[interpolation.size - 1].xRight - interpolation[0].xLeft) / interpolation.size < 1)
                 {
                     chart.ChartAreas[0].AxisX.LabelStyle.Format = "0.##";
                 }
@@ -118,18 +118,11 @@ namespace CubicSplineInterpolation
 
                     double dx = (interpolation[i].xRight - interpolation[i].xLeft) * 0.01;
 
-                    //int dim = 1;
-                    //while (Math.Round(dx, dim - 1) == Math.Round(dx, dim))
-                    //{
-                    //    dim++;
-                    //}
 
                     for (double j = interpolation[i].xLeft; j <= interpolation[i].xRight; j += dx)
                     {
-                        chart.Series["Spline " + (i + 1).ToString()].Points.AddXY(
-                            /*Math.Round(j, dim)*/j, 
-                            interpolation[i].Function(j));
-                        Console.WriteLine($"{Math.Round(j, 2)}");
+                        chart.Series["Spline " + (i + 1).ToString()].Points.AddXY(j, interpolation[i].Function(j));
+                        Console.WriteLine($"{j}");
                     }
 
                     dataPoint[i] = chart.Series["Spline " + (i + 1).ToString()].Points[0];
@@ -150,13 +143,6 @@ namespace CubicSplineInterpolation
                 dataPoint[interpolation.size].Color = Color.Black;
                 dataPoint[interpolation.size].MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
                 dataPoint[interpolation.size].MarkerSize = 5;
-
-                //chart.Series.Add("Spline");
-                //chart.Series["Spline"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-                //for (int i = 0; i < interpolation.size + 1; i++)
-                //{
-                //    chart.Series["Spline"].Points.AddXY(x[i], y[i]);
-                //}
             }  
         }
 
@@ -205,62 +191,31 @@ namespace CubicSplineInterpolation
             }
         }
 
-        private void buttonOpen_Click(object sender, EventArgs e)
+        private void buttonSavePic_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
+            SaveFileDialog saveFileDialog = new SaveFileDialog
             {
-                Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*",
+                Title = "Save picture of graph",
+                Filter = "JPeg Image|*.jpg|Bitmap Image|*.bmp|PNG Image|*.png|Gif Image|*.gif"
             };
 
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                interpolation = new CubicSplineInterpolation(openFileDialog.FileName);
-                System.Windows.Forms.DataVisualization.Charting.DataPoint[] dataPoint =
-                    new System.Windows.Forms.DataVisualization.Charting.DataPoint[interpolation.size + 1];
-
-                chart.Series.Clear();
-
-                if ((interpolation[interpolation.size - 1].xRight - interpolation[0].xLeft) / interpolation.size <= 1)
+                switch(saveFileDialog.FilterIndex)
                 {
-                    chart.ChartAreas[0].AxisX.LabelStyle.Format = "0.##";
+                    case 1:
+                        chart.SaveImage(saveFileDialog.FileName, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Jpeg);
+                        break;
+                    case 2:
+                        chart.SaveImage(saveFileDialog.FileName, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Bmp);
+                        break;
+                    case 3:
+                        chart.SaveImage(saveFileDialog.FileName, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Png);
+                        break;
+                    case 4:
+                        chart.SaveImage(saveFileDialog.FileName, System.Windows.Forms.DataVisualization.Charting.ChartImageFormat.Gif);
+                        break;
                 }
-                else
-                {
-                    chart.ChartAreas[0].AxisX.LabelStyle.Format = "#";
-                }
-
-
-                for (int i = 0; i < interpolation.size; i++)
-                {
-                    chart.Series.Add("Spline " + (i + 1).ToString());
-                    chart.Series["Spline " + (i + 1).ToString()].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-
-                    double dx = (interpolation[i].xRight - interpolation[i].xLeft) * 0.01;
-
-                    for (double j = interpolation[i].xLeft; j <= interpolation[i].xRight; j += dx)
-                    {
-                        chart.Series["Spline " + (i + 1).ToString()].Points.AddXY(/*Math.Round(j + 0.01, 2)*/j, interpolation[i].Function((double)j));
-                        //Console.WriteLine($"{j}");
-                    }
-
-                    dataPoint[i] = chart.Series["Spline " + (i + 1).ToString()].Points[0];
-                    dataPoint[i].Color = Color.Black;
-                    dataPoint[i].MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-                    dataPoint[i].MarkerSize = 5;
-
-                    dataGridViewVars.Rows[i].HeaderCell.Value = (i + 1).ToString();
-                    dataGridViewVars.Rows[i].Cells[0].Value = interpolation[i].xLeft;
-                    dataGridViewVars.Rows[i].Cells[1].Value = interpolation[i].a;
-                    dataGridViewVars.Rows[i].Cells[2].Value = interpolation[i].b;
-                    dataGridViewVars.Rows[i].Cells[3].Value = interpolation[i].c;
-                    dataGridViewVars.Rows[i].Cells[4].Value = interpolation[i].d;
-                }
-
-
-                dataPoint[interpolation.size] = chart.Series["Spline " + (interpolation.size).ToString()].Points.Last();
-                dataPoint[interpolation.size].Color = Color.Black;
-                dataPoint[interpolation.size].MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-                dataPoint[interpolation.size].MarkerSize = 5;
             }
         }
     }

@@ -35,7 +35,7 @@
             this.buttonInteprolate = new System.Windows.Forms.Button();
             this.buttonClear = new System.Windows.Forms.Button();
             this.dataGridViewVars = new System.Windows.Forms.DataGridView();
-            this.buttonOpen = new System.Windows.Forms.Button();
+            this.buttonSavePic = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
@@ -103,15 +103,15 @@
             this.dataGridViewVars.Size = new System.Drawing.Size(440, 235);
             this.dataGridViewVars.TabIndex = 4;
             // 
-            // buttonOpen
+            // buttonSavePic
             // 
-            this.buttonOpen.Location = new System.Drawing.Point(1073, 481);
-            this.buttonOpen.Name = "buttonOpen";
-            this.buttonOpen.Size = new System.Drawing.Size(119, 51);
-            this.buttonOpen.TabIndex = 5;
-            this.buttonOpen.Text = "Считать с файла";
-            this.buttonOpen.UseVisualStyleBackColor = true;
-            this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
+            this.buttonSavePic.Location = new System.Drawing.Point(1073, 481);
+            this.buttonSavePic.Name = "buttonSavePic";
+            this.buttonSavePic.Size = new System.Drawing.Size(119, 51);
+            this.buttonSavePic.TabIndex = 5;
+            this.buttonSavePic.Text = "Сохранить график";
+            this.buttonSavePic.UseVisualStyleBackColor = true;
+            this.buttonSavePic.Click += new System.EventHandler(this.buttonSavePic_Click);
             // 
             // buttonSave
             // 
@@ -129,7 +129,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1525, 795);
             this.Controls.Add(this.buttonSave);
-            this.Controls.Add(this.buttonOpen);
+            this.Controls.Add(this.buttonSavePic);
             this.Controls.Add(this.dataGridViewVars);
             this.Controls.Add(this.buttonClear);
             this.Controls.Add(this.buttonInteprolate);
@@ -152,7 +152,7 @@
         private System.Windows.Forms.Button buttonInteprolate;
         private System.Windows.Forms.Button buttonClear;
         private System.Windows.Forms.DataGridView dataGridViewVars;
-        private System.Windows.Forms.Button buttonOpen;
+        private System.Windows.Forms.Button buttonSavePic;
         private System.Windows.Forms.Button buttonSave;
     }
 }
